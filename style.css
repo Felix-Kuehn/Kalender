@@ -3,16 +3,19 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 62.5%; /* 1rem = 10px */
 body {
     background-color: rgba(255, 181, 44, 0.699);    /*Obvious*/
     margin-left: 40px;
 }
 
 p {
-    margin-bottom: 30px;
-    font-size: 1.3rem;
-    line-height: 1.5;
-    max-width: 61em;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 2.5rem;
+    max-width: 100rem;
     text-align: center;
 }
 
@@ -21,13 +24,13 @@ p:hover{
 }
 
 h1 {
-    width: 40em; /* Would be better with max-width but for this one, looks better with only width */
+    width: 100rem; /* Would be better with max-width but for this one, looks better with only width */
     background-color: #ddd;
-    border-radius: 20px 160px;
+    border-radius: 2rem 16rem;
     border: medium solid rgb(192, 94, 231);
     padding: 1rem 2rem;
-    outline: 4px solid blue;
-    outline-offset: 4px;
+    outline: .4rem solid blue;
+    outline-offset: .4rem;
     font-family: "monospace";
     text-align: center;
 }
@@ -39,7 +42,7 @@ h1:hover{
 .inhalt {                          /*classes will be called with a . before the name in css*/
     display: flex;                  /* tells css to allign siblings next to eachother*/
     align-items: flex-start;
-    gap: 60px;
+    gap: 6rem;
 }
 
 .inhalt:hover{
@@ -56,18 +59,18 @@ tr:nth-child(7) td:nth-child(n+2) {
 
 table {
     border-collapse: collapse ;
-    border: 5px solid black;
+    border: 0.5rem solid black;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 140%;
+    font-size: 2rem;
     table-layout: fixed;
-    width: 420px;
-    height: 380px;
-    min-width: 400px;
-    min-height: 380px;
+    width: 42rem;
+    height: 38rem;
+    min-width: 40rem;
+    min-height: 38rem;
 }
 th, td {
     background-color: rgb(224, 183, 240);
-    border: 2px solid black;
+    border: 0.2rem solid black;
     text-align: center;
 }
 td:hover{                     /* Changes the color when hovered, Important: If you want more cells or similar to be involved, each will have to be paired with :hover individually. Greyed out areas do not have hover effect, because their instructions are more specific, which helps visually in this case. */
@@ -81,15 +84,15 @@ th:hover{
 }
 
 tr:nth-child(7) td:nth-child(1) {       /* Current day marked with green border. At the moment manually assigned */
-    outline: 4px solid rgb(51, 216, 51);
-    outline-offset: -3px;
+    outline: .4rem solid rgb(51, 216, 51);
+    outline-offset: -3rem;
 }
 
 .ereignisse {
-    max-width: 500px;                /* width of the whole textfield, too low and you´ll have a few words before going to the next line. With this it set´s a maximum*/
-    font-size: 1.2rem;
+    max-width: 530px;                /* width of the whole textfield, too low and you´ll have a few words before going to the next line. With this it set´s a maximum*/
+    font-size: 1.8rem;
     line-height: 1.3;
-    margin-top: -30px;
+    margin-top: -3rem;
 }
 
 td:nth-child(6) {                           /* every 6th cell in the table is colored blue, cause td´s are childs to tr */
@@ -102,8 +105,8 @@ td:nth-child(7) {
 
 caption {
     background-color: #ddd;
-    outline: 4px solid black;
-    margin-left: 4px;
-    margin-right: 4px;
+    outline: .4rem solid black;
+    margin-left: .4rem;
+    margin-right: .4rem;
 }
 
