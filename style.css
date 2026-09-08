@@ -81,15 +81,6 @@ td:hover{                     /* Changes the color when hovered, Important: If y
 
 }
 
-th:hover{
-    cursor: default;
-}
-
-tr:nth-child(7) td:nth-child(1) {       /* Current day marked with green border. At the moment manually assigned */
-    outline: .4rem solid rgb(51, 216, 51);
-    outline-offset: -3rem;
-}
-
 .ereignisse {
     max-width: 530px;                /* width of the whole textfield, too low and you´ll have a few words before going to the next line. With this it set´s a maximum*/
     font-size: 1.8rem;
@@ -127,4 +118,10 @@ caption {
 
 .kalender {
     text-align: center;
+}
+
+@media (max-width: 67rem) {
+    html {
+        font-size: 50%;
+    }
 }
