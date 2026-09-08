@@ -8,18 +8,30 @@
   <body>                                     
    <h1 id="ueberschrift"></h1>
    <p id="beschreibung"></p>
-   <div class="inhalt">   <!--Start to define a class, with this table and ereignisse are siblings and can be interacted with.-->
-    <table id="tabelle"></table>
-    <div class="ereignisse">
-    <h2 id="ereignisse-ueberschrift"></h2>
-    <h3>Ereignisse </h3>
-    <ul class="ereignisseHistorisch"></ul>
-    <h3>Tode </h3>
-    <ul class="tode"></ul>
-    <h3>Geburten</h3>  
-    <ul class="geburten"></ul>
+ <div class="inhalt">
+
+    <div class="kalender">
+        <table id="tabelle"></table>
+
+        <div class="buttons">
+            <button id="lastButton">Zurück</button>
+            <button id="forwardButton">Vorwärts</button>
+        </div>
     </div>
-  </div>    <!--close div 2 times, cause called 2 times in itself. Siblings to move them next to eachother in css -->
+
+    <div class="ereignisse">
+        <h2 id="ereignisse-ueberschrift"></h2>
+        <h3>Ereignisse</h3>
+        <ul class="ereignisseHistorisch"></ul>
+
+        <h3>Tode</h3>
+        <ul class="tode"></ul>
+
+        <h3>Geburten</h3>
+        <ul class="geburten"></ul>
+    </div>
+
+</div>   <!--close div 2 times, cause called 2 times in itself. Siblings to move them next to eachother in css -->
     <script src="script2.js"></script>         <!-- script.js is included, different then the .css file -->
   </body>
 </html>

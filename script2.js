@@ -1,59 +1,48 @@
 'use strict';
 const date = new Date();
+let pickedDate = new Date();
+const baseURL = "https://history.muffinlabs.com/date";
+
+function reloadPage() {
 
 const day = date.getDate();
 const month = date.getMonth();
 const year = date.getFullYear();
 const weekDay = date.getDay();
 
+const pickedDay =pickedDate.getDate();
+const pickedMonth = pickedDate.getMonth();
+const pickedYear = pickedDate.getFullYear();
+const pickedWeekDay = pickedDate.getDay();
+
+console.log(date);
 console.log(day);
 console.log(month);
 console.log(year);
 console.log(weekDay);
 
-const baseURL = "https://history.muffinlabs.com/date";
 
-var apiURL = `${baseURL}/${month + 1}/${day}`;
+var apiURL = `${baseURL}/${pickedMonth + 1}/${pickedDay}`;
 console.log(apiURL);
-
-function getAPIData() {
-    return fetch(apiURL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`)
-            };
-
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-
-            return data;
-            
-        })
-        .catch(error => {
-            console.error("Error fetching API data:", error);
-        });
-}
 
 const fullDate =
         `${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')}.${year}`;
 
 console.log(fullDate);
 
-function berechneTagesnummer(date) {
+function berechneTagesnummer(pickedDate) {
     const jahresanfang = new Date(
-        date.getFullYear(),0,1);
+        pickedDate.getFullYear(),0,1);
 
     const millisekundenProTag = 1000 * 60 * 60 * 24;
 
     return Math.floor(
-        (date - jahresanfang) / millisekundenProTag) + 1;
+        (pickedDate - jahresanfang) / millisekundenProTag) + 1;
 }
 
-function berechneTageUebrig(date) {
+function berechneTageUebrig(pickedDate) {
     const jahresende = new Date(
-        date.getFullYear() + 1,
+        pickedDate.getFullYear() + 1,
         0,
         1
     );
@@ -61,7 +50,7 @@ function berechneTageUebrig(date) {
     const millisekundenProTag = 1000 * 60 * 60 * 24;
 
     return Math.floor(
-        (jahresende - date) / millisekundenProTag
+        (jahresende - pickedDate) / millisekundenProTag
     );
 }
 
@@ -84,10 +73,10 @@ function berechneTageImMonat(year, month) {
     );
 }
 
-const tagesNummer = berechneTagesnummer(date);
-const tageUebrig = berechneTageUebrig(date);
-const wochentgz = berechneWocheImMonat(day);
-const daysInMonth = berechneTageImMonat(year, month);
+const tagesNummer = berechneTagesnummer(pickedDate);
+const tageUebrig = berechneTageUebrig(pickedDate);
+const wochentgz = berechneWocheImMonat(pickedDay);
+const daysInMonth = berechneTageImMonat(pickedYear, pickedMonth);
 
 const wochentage = [
     "Sonntag",
@@ -122,14 +111,14 @@ const daycounter = [
     "fünfte"
 ];
 
-const wochentag = wochentage[weekDay];
-const monat = monate[month];
+const wochentag = wochentage[pickedWeekDay];
+const monat = monate[pickedMonth];
 const daycount = daycounter[wochentgz - 1];
 
 document.getElementById("ueberschrift").textContent =
     `Kalenderblatt vom ${fullDate}.`;
 
-document.getElementById("beschreibung").textContent =
+    document.getElementById("beschreibung").textContent =
     `Der ${day}.${monat} ${year} ist ein ${wochentag} ` +
     `und zwar der ${daycount} ${wochentag} im Monat ${monat} ` +
     `des Jahres ${year}. Es handelt sich um den ${tagesNummer}. ` +
@@ -141,39 +130,30 @@ document.getElementById("beschreibung").textContent =
 document.getElementById("ereignisse-ueberschrift").textContent = 
 `Historische Ereignisse am ${day}. ${monat} ${year}`;
 
-function createHistoricEventsList(events) {
-    getAPIData()
-        .then(data => {
-          const events = data.data.Events;
-          const deaths = data.data.Deaths;
-          const births = data.data.Births;
-        
-        for (let i = 0; i < 2; i++) { 
-            const randomIndex = Math.floor(Math.random() * events.length);
-            const event = events[randomIndex];
-            const listItem = document.createElement("li");
-            listItem.textContent = `${event.year}: ${event.text}`;
-            document.querySelector(".ereignisseHistorisch").appendChild(listItem);
-        }   
-        for (let i = 0; i < 2; i++) { 
-            const randomIndex = Math.floor(Math.random() * deaths.length);
-            const death = deaths[randomIndex];
-            const listItem = document.createElement("li");
-            listItem.textContent = `${death.year}: ${death.text}`;
-            document.querySelector(".tode").appendChild(listItem);
-         
-        }
-        for (let i = 0; i < 2; i++) { 
-            const randomIndex = Math.floor(Math.random() * births.length);
-            const birth = births[randomIndex];
-            const listItem = document.createElement("li");
-            listItem.textContent = `${birth.year}: ${birth.text}`;
-            document.querySelector(".geburten").appendChild(listItem);
-        }       
-      }); 
-}
 
 createHistoricEventsList()
+
+
+const tabelle = document.getElementById("tabelle");
+
+erstelleKalender(
+    tabelle,
+    pickedYear,
+    pickedMonth,
+    daysInMonth
+);
+
+const presentDayCell = document.querySelectorAll("#tabelle td");
+
+presentDayCell.forEach(zelle => {
+    if (zelle.textContent === String(day)) {
+        zelle.style.backgroundColor = "lightgreen";
+    }
+});
+
+document.getElementById("lastButton").addEventListener("click", goOneMonthBack);
+
+document.getElementById("forwardButton").addEventListener("click", goOneMonthForward);
 
 function erstelleKalender(tabelle, year, month, daysInMonth) {
 
@@ -221,19 +201,81 @@ function erstelleKalender(tabelle, year, month, daysInMonth) {
         zelle.textContent = "";
     }
 }
-const tabelle = document.getElementById("tabelle");
 
-erstelleKalender(
-    tabelle,
-    year,
-    month,
-    daysInMonth
-);
+function goOneMonthBack () {
+    pickedDate.setMonth(pickedDate.getMonth() - 1);
+    console.log("Rückwärts");
+    updateCalendar();
+}
 
-const presentDayCell = document.querySelectorAll("#tabelle td");
+function goOneMonthForward () {
+    pickedDate.setMonth(pickedDate.getMonth() + 1);
+    console.log("Vorwärts");
+    updateCalendar();
+}
 
-presentDayCell.forEach(zelle => {
-    if (zelle.textContent === String(day)) {
-        zelle.style.backgroundColor = "lightgreen";
-    }
-});
+function updateCalendar() {
+       const daysInMonth = berechneTageImMonat(
+        pickedDate.getFullYear(),
+        pickedDate.getMonth()
+    );
+    tabelle.innerHTML = "";
+    erstelleKalender(
+        tabelle,
+        pickedDate.getFullYear(),
+        pickedDate.getMonth(),
+        daysInMonth
+    );
+}
+
+function getAPIData() {
+    return fetch(apiURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`)
+            };
+
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+
+            return data;
+            
+        })
+        .catch(error => {
+            console.error("Error fetching API data:", error);
+        });
+}
+
+function createHistoricEventsList(events) {
+    getAPIData()
+        .then(data => {
+          const events = data.data.Events;
+          const deaths = data.data.Deaths;
+          const births = data.data.Births;
+        
+        for (let i = 0; i < 2; i++) { 
+            const randomIndex = Math.floor(Math.random() * events.length);
+            const event = events[randomIndex];
+            const listItem = document.createElement("li");
+            listItem.textContent = `${event.year}: ${event.text}`;
+            document.querySelector(".ereignisseHistorisch").appendChild(listItem);
+        }   
+        for (let i = 0; i < 2; i++) { 
+            const randomIndex = Math.floor(Math.random() * deaths.length);
+            const death = deaths[randomIndex];
+            const listItem = document.createElement("li");
+            listItem.textContent = `${death.year}: ${death.text}`;
+            document.querySelector(".tode").appendChild(listItem);
+         
+        }
+        for (let i = 0; i < 2; i++) { 
+            const randomIndex = Math.floor(Math.random() * births.length);
+            const birth = births[randomIndex];
+            const listItem = document.createElement("li");
+            listItem.textContent = `${birth.year}: ${birth.text}`;
+            document.querySelector(".geburten").appendChild(listItem);
+        }       
+      }); 
+}

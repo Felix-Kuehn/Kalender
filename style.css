@@ -5,6 +5,8 @@
 
 html {
     font-size: 62.5%; /* 1rem = 10px */
+}
+
 body {
     background-color: rgba(255, 181, 44, 0.699);    /*Obvious*/
     margin-left: 40px;
@@ -110,3 +112,19 @@ caption {
     margin-right: .4rem;
 }
 
+#forwardButton, #lastButton {
+    background-color: #ddd;
+    border: 0.2rem solid black;
+    border-radius: 1rem;
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    text-align: center;
+    width: 20rem;
+    margin: 1rem.5rem;
+}
+
+.kalender {
+    text-align: center;
+}
